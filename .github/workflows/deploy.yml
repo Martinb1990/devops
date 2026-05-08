@@ -9,9 +9,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -26,7 +23,10 @@ jobs:
       - name: Deploy to server
         run: |
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            cd ~/app || mkdir -p ~/app && cd ~/app
+            set -e
+
+            cd ~/my-backend-stack
+
             if [ ! -d ".git" ]; then
               git clone https://github.com/${{ github.repository }} .
             else
