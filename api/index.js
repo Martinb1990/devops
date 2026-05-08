@@ -7,7 +7,7 @@ app.use(express.json());
 app.use("/health", healthRoute);
 
 app.get("/", (req, res) => {
-  res.send("API is running");
+  res.send("API is running from PC workflow");
 });
 
 app.listen(3000, () => {
