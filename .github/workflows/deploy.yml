@@ -6,7 +6,36 @@ on:
       - main
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: npm
+          cache-dependency-path: api/package-lock.json
+
+      - name: Install dependencies
+        working-directory: api
+        run: npm ci
+
+      - name: Lint
+        working-directory: api
+        run: npm run lint
+
+      - name: Test
+        working-directory: api
+        run: npm test
+
+      - name: Verify image builds
+        run: docker build -t node-api ./api
+
   deploy:
+    needs: build
     runs-on: ubuntu-latest
 
     steps:
