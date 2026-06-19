@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "excludedCommands": ["docker"],
+    "network": {
+      "allowedDomains": [
+        "github.com",
+        "*.github.com",
+        "*.githubusercontent.com",
+        "registry.npmjs.org",
+        "*.npmjs.org",
+        "deb.debian.org",
+        "*.ubuntu.com",
+        "*.docker.io",
+        "*.docker.com"
+      ]
+    }
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/.claude/hooks/guard.sh",
+            "timeout": 10,
+            "statusMessage": "Safety guard checking command..."
+          }
+        ]
+      }
+    ]
+  }
+}

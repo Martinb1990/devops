@@ -10,7 +10,13 @@ node_modules/
 # Editor files
 .vscode/
 .idea/
-.claude/
+
+# Claude Code: ignore everything under .claude except the shared, committed config
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
+.claude/hooks/*
+!.claude/hooks/guard.sh
 
 # OS files
 .DS_Store
