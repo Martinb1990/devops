@@ -92,6 +92,26 @@ Pushing to `main` triggers [.github/workflows/deploy.yml](.github/workflows/depl
 
 ---
 
+## Claude Code Guardrails
+
+This repo ships a version-controlled Claude Code safety config so the same
+guardrails apply to any clone:
+
+- [.claude/settings.json](.claude/settings.json) — enables the sandbox
+  (`failIfUnavailable: true`) with a scoped network allowlist, and registers
+  the `PreToolUse` Bash hook.
+- [.claude/hooks/guard.sh](.claude/hooks/guard.sh) — blocks `rm` on root/home
+  paths, prompts on recursive force-deletes, and enforces the git workflow:
+  never commit directly to `main`, branch first, and ask before pushing or
+  merging to `main`.
+
+> **Note:** these guardrails are **project-level**, so they only protect work
+> inside this repo. The box-wide (global) sandbox still covers everything else
+> on the machine. A fresh clone also needs Claude Code configured to trust and
+> run project hooks for the guard to actually fire.
+
+---
+
 ## Future Goals
 
 - HTTPS / automated certificates
